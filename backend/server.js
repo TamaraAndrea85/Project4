@@ -1,30 +1,22 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 4000;
-
 const dotenv = require("dotenv");
 dotenv.config();
-//db
 const dbConnect = require("./config/db/connection");
-const { userRegisterCtrl } = require("./controllers/users/usersCtrl");
+const userRoutes = require("./routes/users/usersRoute");
+const { errorHandler, notFound } = require("./middleware/error/errorHandler");
+const postRoute = require("./routes/posts/postRoute");
+
 dbConnect();
 
 //middleware
 app.use(express.json());
-const logger = (req, res, next) => {
-  next();
-};
 
-//Register
-app.post("/api/users/register", userRegisterCtrl);
-//Login
-app.post("/api/users/login", (req, res) => {
-  res.json({ user: "User Logged in" });
-});
+//user route
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoute);
+app.use(notFound);
+app.use(errorHandler);
 
-//fetch all users
-app.get("/api/users", (req, res) => {
-  res.json({ user: "Fetch all users" });
-});
-
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, console.log(`server is running on port ${PORT}`));
