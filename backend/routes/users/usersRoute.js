@@ -20,9 +20,9 @@ const {
 } = require("../../controllers/users/usersCtrl");
 const authMiddleware = require("../../middleware/auth/authMiddleware");
 const {
-  profilePhotoUpload,
+  photoUpload,
   profilePhotoResize,
-} = require("../../middleware/uploads/profilePhotoUpload");
+} = require("../../middleware/uploads/photoUpload");
 
 const userRoutes = express.Router();
 
@@ -31,11 +31,12 @@ userRoutes.post("/login", loginUserCtrl);
 userRoutes.put(
   "/profilephoto-upload",
   authMiddleware,
-  profilePhotoUpload.single("image"),
+  photoUpload.single("image"),
   profilePhotoResize,
   profilePhotoUploadCtrl
 );
 userRoutes.get("/", authMiddleware, fetchUsersCtrl);
+userRoutes.get("/profile/:id", authMiddleware, userProfileCtrl);
 // Password reset
 userRoutes.post("/forgot-password-token", forgotPasswordToken);
 userRoutes.put("/reset-password", passwordResetCtrl);
@@ -46,12 +47,11 @@ userRoutes.post(
   authMiddleware,
   generateVerificationTokenCtrl
 );
-
 userRoutes.put("/verify-account", authMiddleware, accountVerificationCtrl);
 userRoutes.put("/unfollow", authMiddleware, unfollowUserCtrl);
 userRoutes.put("/block-user/:id", authMiddleware, blockUserCtrl);
 userRoutes.put("/unblock-user/:id", authMiddleware, unBlockUserCtrl);
-userRoutes.get("/profile/:id", authMiddleware, userProfileCtrl);
+
 userRoutes.put("/:id", authMiddleware, updateUserCtrl);
 userRoutes.delete("/:id", deleteUsersCtrl);
 userRoutes.get("/:id", fetchUserDetailsCtrl);

@@ -101,6 +101,7 @@ const fetchUserDetailsCtrl = expressAsyncHandler(async (req, res) => {
 });
 
 //------------------------------
+//------------------------------
 //User profile
 //------------------------------
 
@@ -108,7 +109,7 @@ const userProfileCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongodbId(id);
   try {
-    const myProfile = await User.findById(id);
+    const myProfile = await User.findById(id).populate("posts");
     res.json(myProfile);
   } catch (error) {
     res.json(error);
@@ -372,7 +373,6 @@ const passwordResetCtrl = expressAsyncHandler(async (req, res) => {
 });
 
 //------------------------------
-//------------------------------
 //Profile photo upload
 //------------------------------
 
@@ -392,7 +392,9 @@ const profilePhotoUploadCtrl = expressAsyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  res.json(foundUser);
+  //remove the saved img
+  // fs.unlinkSync(localPath);
+  res.json(imgUploaded);
 });
 
 module.exports = {
