@@ -5,12 +5,13 @@ const Post = require("../../model/post/Post");
 const validateMongodbId = require("../../utils/validateMongodbID");
 const User = require("../../model/user/User");
 const cloudinaryUploadImg = require("../../utils/cloudinary");
+const { post } = require("../../routes/comments/commentRoutes");
 
 //----------------------------------------------------------------
 //CREATE POST
 //----------------------------------------------------------------
 const createPostCtrl = expressAsyncHandler(async (req, res) => {
-  console.log(req.file);
+  // console.log(req.file);
   const { _id } = req.user;
   //   validateMongodbId(req.body.user);
   //Check for bad words
@@ -27,21 +28,30 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
   }
 
   //1. Get the oath to img
-  const localPath = `public/images/posts/${req.file.filename}`;
-  //2.Upload to cloudinary
-  const imgUploaded = await cloudinaryUploadImg(localPath);
-  try {
-    // const post = await Post.create({
-    //   ...req.body,
-    //   image: imgUploaded?.url,
-    //   user: _id,
-    // });
-    res.json(imgUploaded);
-    //Remove uploaded img
-    fs.unlinkSync(localPath);
-  } catch (error) {
-    res.json(error);
+  if (req.file) {
+    const localPath = `public/images/posts/${req.file.filename}`;
+    //2.Upload to cloudinary
+    const imgUploaded = await cloudinaryUploadImg(localPath);
+    try {
+      const post = await Post.create({
+        ...req.body,
+        image: imgUploaded?.url,
+        user: _id,
+      });
+      res.json(post);
+      //Remove uploaded img
+      fs.unlinkSync(localPath);
+      return;
+    } catch (error) {
+      res.json(error);
+    }
   }
+  const post = await Post.create({
+    ...req.body,
+
+    user: _id,
+  });
+  res.json(post);
 });
 
 //-------------------------------
