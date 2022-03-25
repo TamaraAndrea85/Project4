@@ -6,6 +6,9 @@ const validateMongodbId = require("../../utils/validateMongodbID");
 const User = require("../../model/user/User");
 const cloudinaryUploadImg = require("../../utils/cloudinary");
 
+//----------------------------------------------------------------
+//CREATE POST
+//----------------------------------------------------------------
 const createPostCtrl = expressAsyncHandler(async (req, res) => {
   console.log(req.file);
   const { _id } = req.user;

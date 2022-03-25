@@ -37,6 +37,13 @@ userRoutes.put(
 );
 userRoutes.get("/", authMiddleware, fetchUsersCtrl);
 userRoutes.get("/profile/:id", authMiddleware, userProfileCtrl);
+userRoutes.put(
+  "/profilephoto-upload",
+  authMiddleware,
+  photoUpload.single("image"),
+  profilePhotoResize,
+  profilePhotoUploadCtrl
+);
 // Password reset
 userRoutes.post("/forgot-password-token", forgotPasswordToken);
 userRoutes.put("/reset-password", passwordResetCtrl);
