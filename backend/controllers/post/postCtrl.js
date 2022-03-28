@@ -58,10 +58,18 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
 //Fetch all posts
 //-------------------------------
 const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
+  const hasCategory = req.query.category;
   try {
-    const posts = await Post.find({}).populate("user");
-    res.json(posts);
+    //Chick if there is a category
+    if (hasCategory) {
+      const posts = await Post.find({ category: hasCategory }).populate("user");
+      res.json(posts);
+    } else {
+      const posts = await Post.find({}).populate("user");
+      res.json(posts);
+    }
   } catch (error) {}
+  res.json(error);
 });
 
 //------------------------------
@@ -71,21 +79,26 @@ const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
 const fetchPostCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongodbId(id);
+  console.log(id);
   try {
     const post = await Post.findById(id)
       .populate("user")
-      .populate("dislikes")
+      .populate("disLikes")
       .populate("likes");
-    //update number of views
-    await Post.findByIdAndUpdate(
+    console.log(id);
+
+    // update number of views
+    const updatedPost = await Post.findByIdAndUpdate(
       id,
       {
         $inc: { numViews: 1 },
       },
       { new: true }
     );
-    res.json(post);
+
+    if (updatedPost) res.json(post);
   } catch (error) {
+    console.log("We got a error");
     res.json(error);
   }
 });
