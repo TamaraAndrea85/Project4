@@ -29,7 +29,7 @@ const Login = () => {
   //redirect
   const store = useSelector((state) => state?.users);
   const { userAuth, loading, serverErr, appErr } = store;
-  if (userAuth) return <Navigate to="/profile" />;
+  if (userAuth) return <Navigate to="/profile/:id" />;
   return (
     <>
       <section className="min-h-screen relative py-20 2xl:py-40 bg-gray-900 overflow-hidden">

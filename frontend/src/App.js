@@ -11,13 +11,21 @@ import PostDetails from "./components/Posts/PostDetails";
 // import AdminRoute from "./components/Navigation/ProtectedRoutes/AdminRoute";
 import CreatePost from "./components/Posts/CreatePosts";
 import PostsList from "./components/Posts/PostsList";
+import UpdatePost from "./components/Posts/UpdatePost";
+import UpdateComment from "./components/Comments/UpdateComment";
+import Profile from "./components/Users/Profile/Profile";
+import UploadProfilePhoto from "./components/Users/Profile/UploadProfilePhoto";
+import UpdateProfileForm from "./components/Users/Profile/UpdateProfileForm";
 import "./index.js";
 
 function App() {
   return (
     <>
       <Navbar />
+
       <Routes>
+        <Route path="/update-comment/:id" element={<UpdateComment />}></Route>
+        <Route path="/update-post/:id" element={<UpdatePost />}></Route>
         <Route path="/create-post" element={<CreatePost />}></Route>
         <Route path="/update-category/:id" element={<UpdateCategory />}></Route>
         <Route path="/category-list" element={<CategoryList />}></Route>
@@ -27,6 +35,15 @@ function App() {
         <Route path="/add-category" element={<AddNewCategory />}></Route>
         <Route path="/posts" element={<PostsList />}></Route>
         <Route path="/posts/:id" element={<PostDetails />}></Route>
+        <Route path="/profile/:id" element={<Profile />}></Route>
+        <Route
+          path="/upload-profile-photo/:id"
+          element={<UploadProfilePhoto />}
+        ></Route>
+        <Route
+          path="/update-profile/:id"
+          element={<UpdateProfileForm />}
+        ></Route>
       </Routes>
     </>
   );

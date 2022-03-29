@@ -1,25 +1,40 @@
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
-import { fetchPostDetailsAction } from "../../redux/slices/posts/postSlices";
+import {
+  deletePostAction,
+  fetchPostDetailsAction,
+} from "../../redux/slices/posts/postSlices";
 import { useDispatch, useSelector } from "react-redux";
 import DateFormatter from "../../utils/DateFormatter";
 import LoadingComponent from "../../utils/LoadingComponent";
+import AddComment from "../Comments/UpdateComment";
+import CommentsList from "../Comments/CommentsList";
 
 const PostDetails = () => {
   const { id } = useParams();
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchPostDetailsAction(id));
-  }, [id, dispatch]);
 
   //select post details from store
-
   const post = useSelector((state) => state?.post);
+  const { postDetails, loading, appErr, serverErr, isDeleted } = post;
 
-  const { postDetails, loading, appErr, serverErr } = post;
+  //comment
+  const comment = useSelector((state) => state.comment);
+  const { commentCreated, commentDeleted } = comment;
+  useEffect(() => {
+    dispatch(fetchPostDetailsAction(id));
+  }, [id, dispatch, commentCreated, commentDeleted]);
+
+  //Get login user
+  const user = useSelector((state) => state.users);
+  const { userAuth } = user;
+
+  const isCreatedBy = postDetails?.user?._id === userAuth?._id;
+  console.log(isCreatedBy);
+  //redirect
+  if (isDeleted) return <Navigate to="/posts" />;
   return (
     <>
       {loading ? (
@@ -64,28 +79,35 @@ const PostDetails = () => {
                 </div>
               </div>
               {/* Post description */}
-              <div className="max-w-xl mx-auto">
-                <p className="mb-6 text-left  text-xl text-gray-200">
+              <div class="max-w-xl mx-auto">
+                <p class="mb-6 text-left  text-xl text-gray-200">
                   {postDetails?.description}
 
-                  {/* Show delete and update btn if created user */}
-                  <p className="flex">
-                    <Link to="" className="p-3">
-                      <PencilAltIcon class="h-8 mt-3 text-yellow-300" />
-                    </Link>
-                    <button className="ml-3">
-                      <TrashIcon className="h-8 mt-3 text-red-600" />
-                    </button>
-                  </p>
+                  {/* Show delete and update  if it was created by the user */}
+                  {isCreatedBy ? (
+                    <p class="flex">
+                      <Link to={`/update-post/${postDetails?._id}`} class="p-3">
+                        <PencilAltIcon class="h-8 mt-3 text-yellow-300" />
+                      </Link>
+                      <button
+                        onClick={() =>
+                          dispatch(deletePostAction(postDetails?._id))
+                        }
+                        class="ml-3"
+                      >
+                        <TrashIcon class="h-8 mt-3 text-red-600" />
+                      </button>
+                    </p>
+                  ) : null}
                 </p>
               </div>
             </div>
           </div>
           {/* Add comment Form component here */}
-
+          {userAuth ? <AddComment postId={id} /> : null}
           <div className="flex justify-center  items-center">
             {/* <CommentsList comments={post?.comments} postId={post?._id} /> */}
-            CommentsList
+            <CommentsList comments={postDetails?.comments} />
           </div>
         </section>
       )}

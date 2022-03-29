@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { ThumbUpIcon, ThumbDownIcon, EyeIcon } from "@heroicons/react/solid";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -15,7 +16,7 @@ export default function PostsList() {
   //select post from store
   const post = useSelector((state) => state?.post);
   const { postLists, loading, appErr, serverErr, likes, dislikes } = post;
-  console.log(post);
+  console.log(postLists);
   //select categories from store
   const category = useSelector((state) => state?.category);
   const {
@@ -28,13 +29,17 @@ export default function PostsList() {
   const dispatch = useDispatch();
   //fetch post
   useEffect(() => {
-    dispatch(fetchPostsAction());
+    dispatch(fetchPostsAction(""));
   }, [dispatch, likes, dislikes]);
   //fetch categories
   useEffect(() => {
     dispatch(fetchCategoriesAction());
   }, [dispatch]);
-
+  const handleNavigate = async () => {
+    console.log("Clicked");
+    dispatch(fetchPostsAction(""));
+    // <Navigate to="/posts" />
+  };
   return (
     <>
       <section>
@@ -43,16 +48,16 @@ export default function PostsList() {
             <div className="mb-16 flex flex-wrap items-center">
               <div className="w-full lg:w-1/2">
                 <span className="text-green-600 font-bold">
-                  Latest Posts from our awesome authors
+                  Latest Posts from our awesome members!
                 </span>
-                <h2 class="text-4xl text-gray-300 lg:text-5xl font-bold font-heading">
+                <h2 className="text-4xl text-gray-300 lg:text-5xl font-bold font-heading">
                   Latest Post
                 </h2>
               </div>
-              <div classNames=" block text-right w-1/2">
+              <div className=" block text-right w-1/2">
                 {/* View All */}
                 <button
-                  onClick={() => dispatch(fetchPostsAction())}
+                  onClick={handleNavigate}
                   className="inline-block py-2 px-6 rounded-l-xl rounded-t-xl bg-green-600 hover:bg-green-700 text-gray-50 font-bold leading-loose transition duration-200"
                 >
                   View All Posts
@@ -61,7 +66,7 @@ export default function PostsList() {
             </div>
             <div className="flex flex-wrap -mx-3">
               <div className="mb-8 lg:mb-0 w-full lg:w-1/4 px-3">
-                <div classNames="py-4 px-6 bg-gray-600 shadow rounded">
+                <div className="py-4 px-6 bg-gray-600 shadow rounded">
                   <h4 className="mb-4 text-gray-500 font-bold uppercase">
                     Categories
                   </h4>
@@ -73,7 +78,9 @@ export default function PostsList() {
                         {catServerErr} {catAppErr}
                       </h1>
                     ) : categoryList?.length <= 0 ? (
-                      <h1>No Category Found</h1>
+                      <h1 className="text-yellow-400 text-lg text-center">
+                        No Category Found
+                      </h1>
                     ) : (
                       categoryList?.map((category) => (
                         <li>
@@ -99,7 +106,9 @@ export default function PostsList() {
                     {serverErr} {appErr}
                   </h1>
                 ) : postLists?.length <= 0 ? (
-                  <h1>No Post Found</h1>
+                  <h1 className="text-yellow-400 text-lg text-center">
+                    No Post Found
+                  </h1>
                 ) : (
                   postLists?.map((post) => (
                     <div
@@ -119,7 +128,7 @@ export default function PostsList() {
                         <div className="flex flex-row bg-gray-300 justify-center w-full  items-center ">
                           {/* Likes */}
                           <div className="flex flex-row justify-center items-center ml-4 mr-4 pb-2 pt-1">
-                            {/* Toggle like  */}
+                            {/* Togle like  */}
                             <div className="">
                               <ThumbUpIcon
                                 onClick={() =>
