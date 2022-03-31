@@ -1,16 +1,18 @@
 const expressAsyncHandler = require("express-async-handler");
 const Comment = require("../../model/comment/Comment");
 const validateMongodbId = require("../../utils/validateMongodbID");
+const blockUser = require("../../utils/isBlocked");
 
-//-------------------------------------------------------------
 //Create
-//-------------------------------------------------------------
+
 const createCommentCtrl = expressAsyncHandler(async (req, res) => {
   //1.Get the user
   const user = req.user;
+  //Check if user is blocked
+  blockUser(user);
   //2.Get the post Id
   const { postId, description } = req.body;
-  console.log(description);
+
   try {
     const comment = await Comment.create({
       post: postId,
@@ -23,9 +25,7 @@ const createCommentCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
-//-------------------------------
 //fetch all comments
-//-------------------------------
 
 const fetchAllCommentsCtrl = expressAsyncHandler(async (req, res) => {
   try {
@@ -36,9 +36,7 @@ const fetchAllCommentsCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
-//------------------------------
 //commet details
-//------------------------------
 
 const fetchCommentCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -50,9 +48,7 @@ const fetchCommentCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
-//------------------------------
 //Update
-//------------------------------
 
 const updateCommentCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -76,9 +72,7 @@ const updateCommentCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
-//------------------------------
 //delete
-//------------------------------
 
 const deleteCommentCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;

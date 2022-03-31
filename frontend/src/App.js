@@ -16,6 +16,9 @@ import UpdateComment from "./components/Comments/UpdateComment";
 import Profile from "./components/Users/Profile/Profile";
 import UploadProfilePhoto from "./components/Users/Profile/UploadProfilePhoto";
 import UpdateProfileForm from "./components/Users/Profile/UpdateProfileForm";
+import SendEmail from "./components/Users/Emailing/SendEmail";
+import AccountVerified from "./components/Users/AccountVarification/AccountVarified";
+import UsersList from "./components/Users/UsersList/UsersList";
 import "./index.js";
 
 function App() {
@@ -32,10 +35,15 @@ function App() {
         <Route path="/" element={<HomePage />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/users" element={<UsersList />}></Route>
         <Route path="/add-category" element={<AddNewCategory />}></Route>
         <Route path="/posts" element={<PostsList />}></Route>
         <Route path="/posts/:id" element={<PostDetails />}></Route>
         <Route path="/profile/:id" element={<Profile />}></Route>
+        <Route
+          path="/verify-account/:token"
+          element={<AccountVerified />}
+        ></Route>
         <Route
           path="/upload-profile-photo/:id"
           element={<UploadProfilePhoto />}
@@ -44,6 +52,7 @@ function App() {
           path="/update-profile/:id"
           element={<UpdateProfileForm />}
         ></Route>
+        <Route path="/send-email/:email" element={<SendEmail />}></Route>
       </Routes>
     </>
   );
