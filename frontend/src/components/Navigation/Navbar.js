@@ -13,6 +13,7 @@ const Navbar = () => {
   const { userAuth, profile } = state;
   const isAdmin = userAuth?.isAdmin;
 
+  console.log(userAuth, profile);
   //account verification
   const account = useSelector((state) => state?.accountVerification);
   const { loading, appErr, serverErr, token } = account;
@@ -26,7 +27,10 @@ const Navbar = () => {
         <PublicNavbar />
       )}
       {/* Display alert */}
-      {userAuth && !userAuth.isVerified && <AccountVerificationAlertWarning />}
+      {userAuth && !userAuth.isVerified ? (
+        <AccountVerificationAlertWarning />
+      ) : null}
+
       {/* display success msg */}
       {loading && <h2 className="text-center">Loading please wait...</h2>}
       {token && <AccountVerificationSuccessAlert />}

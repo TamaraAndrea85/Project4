@@ -5,6 +5,7 @@ import baseUrl from "../../../utils/baseURL";
 //Redirect action
 
 const resetUserAction = createAction("user/profile/reset");
+const resetPasswordAction = createAction("password/reset");
 
 //register action
 export const registerUserAction = createAsyncThunk(
@@ -182,12 +183,46 @@ export const updateUserAction = createAsyncThunk(
   }
 );
 
+//Update Password
+export const updatePasswordAction = createAsyncThunk(
+  "password/update",
+  async (password, { rejectWithValue, getState, dispatch }) => {
+    //get user token
+    const user = getState()?.users;
+    const { userAuth } = user;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userAuth?.token}`,
+      },
+    };
+    //http call
+    try {
+      const { data } = await axios.put(
+        `${baseUrl}/api/users/password`,
+        {
+          password,
+        },
+        config
+      );
+      //dispatch
+      dispatch(resetPasswordAction());
+      return data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 //fetch User details
 export const fetchUserDetailsAction = createAsyncThunk(
   "user/detail",
   async (id, { rejectWithValue, getState, dispatch }) => {
     try {
       const { data } = await axios.get(`${baseUrl}/api/users/${id}`);
+      console.log(data);
       return data;
     } catch (error) {
       if (!error?.response) throw error;
@@ -512,6 +547,29 @@ const usersSlices = createSlice({
       state.serverErr = undefined;
     });
     builder.addCase(updateUserAction.rejected, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+    });
+
+    //update password
+    builder.addCase(updatePasswordAction.pending, (state, action) => {
+      state.loading = true;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(resetPasswordAction, (state, action) => {
+      state.isPasswordUpdated = true;
+    });
+    builder.addCase(updatePasswordAction.fulfilled, (state, action) => {
+      state.loading = false;
+      state.passwordUpdated = action?.payload;
+      state.isPasswordUpdated = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(updatePasswordAction.rejected, (state, action) => {
       console.log(action.payload);
       state.loading = false;
       state.appErr = action?.payload?.message;

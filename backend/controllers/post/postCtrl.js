@@ -7,14 +7,12 @@ const User = require("../../model/user/User");
 const cloudinaryUploadImg = require("../../utils/cloudinary");
 const { post } = require("../../routes/comments/commentRoutes");
 
-//----------------------------------------------------------------
 //CREATE POST
-//----------------------------------------------------------------
+
 const createPostCtrl = expressAsyncHandler(async (req, res) => {
-  // console.log(req.file);
   const { _id } = req.user;
   //block user
-  blockUser(req.user);
+  // blockUser(req.user);
   //   validateMongodbId(req.body.user);
   //Check for bad words
   const filter = new Filter();
@@ -29,36 +27,47 @@ const createPostCtrl = expressAsyncHandler(async (req, res) => {
     );
   }
 
-  //1. Get the oath to img
-  if (req.file) {
-    const localPath = `public/images/posts/${req.file.filename}`;
-    //2.Upload to cloudinary
-    const imgUploaded = await cloudinaryUploadImg(localPath);
-    try {
-      const post = await Post.create({
-        ...req.body,
-        image: imgUploaded?.url,
-        user: _id,
-      });
-      res.json(post);
-      //Remove uploaded img
-      fs.unlinkSync(localPath);
-      return;
-    } catch (error) {
-      res.json(error);
-    }
+  //Prevet user posts if starter account
+  if (
+    req?.user?.accountType === "Starter Account" &&
+    req?.user?.postCount >= 2
+  ) {
+    throw new Error(
+      "Starter account can only create two posts. Get more followers."
+    );
   }
-  const post = await Post.create({
-    ...req.body,
 
-    user: _id,
-  });
-  res.json(post);
+  // //1. Get the path to img
+  const localPath = `public/images/posts/${req.file.filename}`;
+  // //2.Upload to cloudinary
+  const imgUploaded = await cloudinaryUploadImg(localPath);
+  try {
+    const post = await Post.create({
+      ...req.body,
+      user: _id,
+      image: imgUploaded?.url,
+    });
+    console.log(req.user);
+    //update the user post count
+    await User.findByIdAndUpdate(
+      _id,
+      {
+        $inc: { postCount: 1 },
+      },
+      {
+        new: true,
+      }
+    );
+
+    //Remove uploaded img
+    fs.unlinkSync(localPath);
+    res.json(post);
+  } catch (error) {
+    res.json(error);
+  }
 });
-
-//-------------------------------
 //Fetch all posts
-//-------------------------------
+
 const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
   const hasCategory = req.query.category;
   try {
@@ -80,9 +89,7 @@ const fetchPostsCtrl = expressAsyncHandler(async (req, res) => {
   res.json(error);
 });
 
-//------------------------------
 //Fetch a single post
-//------------------------------
 
 const fetchPostCtrl = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
@@ -111,9 +118,7 @@ const fetchPostCtrl = expressAsyncHandler(async (req, res) => {
   }
 });
 
-//------------------------------
 // Update post
-//------------------------------
 
 const updatePostCtrl = expressAsyncHandler(async (req, res) => {
   console.log(req.user);

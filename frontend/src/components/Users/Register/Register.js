@@ -45,7 +45,7 @@ const Register = () => {
   }
 
   return (
-    <section className="relative py-20 2xl:py-40 bg-gray-800 overflow-hidden">
+    <section className="relative py-20 2xl:py-40 bg-[#464866] overflow-hidden">
       <div className="relative container px-4 mx-auto">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-wrap items-center -mx-4">

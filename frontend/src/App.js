@@ -19,6 +19,7 @@ import UpdateProfileForm from "./components/Users/Profile/UpdateProfileForm";
 import SendEmail from "./components/Users/Emailing/SendEmail";
 import AccountVerified from "./components/Users/AccountVarification/AccountVarified";
 import UsersList from "./components/Users/UsersList/UsersList";
+import UpdatePassword from "./components/Users/PasswordManagement/UpdatePassword";
 import "./index.js";
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
           element={<AccountVerified />}
         ></Route>
         <Route
-          path="/upload-profile-photo/:id"
+          path="/upload-profile-photo"
           element={<UploadProfilePhoto />}
         ></Route>
         <Route
@@ -53,6 +54,7 @@ function App() {
           element={<UpdateProfileForm />}
         ></Route>
         <Route path="/send-email/:email" element={<SendEmail />}></Route>
+        <Route path="/update-password" element={<UpdatePassword />}></Route>
       </Routes>
     </>
   );

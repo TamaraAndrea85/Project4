@@ -36,6 +36,9 @@ const loginUserCtrl = expressAsyncHandler(async (req, res) => {
   const { email, password } = req.body;
   //check if user exists
   const userFound = await User.findOne({ email });
+  //checking if user is Blocked
+  if (userFound?.isBlocked)
+    throw new Error("Sorry you've been blocked: ACCESS DENIED!");
   //Check if password is match
   if (userFound && (await userFound.isPasswordMatched(password))) {
     res.json({
@@ -46,7 +49,7 @@ const loginUserCtrl = expressAsyncHandler(async (req, res) => {
       profilePhoto: userFound?.profilePhoto,
       isAdmin: userFound?.isAdmin,
       token: generateToken(userFound?._id),
-      isVarified: userFound?.isAccountVarified,
+      isVerified: userFound?.isAccountVerified,
     });
   } else {
     res.status(401);
@@ -374,7 +377,7 @@ const profilePhotoUploadCtrl = expressAsyncHandler(async (req, res) => {
   //Find the login user
   const { _id } = req.user;
   //block user
-  blockUser(req?.user);
+  // blockUser(req?.user);
 
   //1. Get the oath to img
   const localPath = `public/images/profile/${req.file.filename}`;

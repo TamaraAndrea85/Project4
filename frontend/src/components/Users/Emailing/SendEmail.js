@@ -32,11 +32,12 @@ const SendEmail = (props) => {
   //select data from store
   const sendMail = useSelector((state) => state?.sendMail);
   const profile = useSelector((state) => state?.profile);
-  const { mailSent, loading, appErr, serverErr, isMailSent } = sendMail;
+  const { mailSent, loading, appErr, serverErr, isMailSent, userAuth } =
+    sendMail;
   console.log(isMailSent);
   console.log(props, email, sendMail, props.route, profile);
   //redirect
-  // if (isMailSent) return <Navigate to={`/profile/${state?.id}`} />;
+  if (isMailSent) return <Navigate to={`/profile/${userAuth?.id}`} />;
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">

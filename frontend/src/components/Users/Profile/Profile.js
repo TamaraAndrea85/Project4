@@ -53,7 +53,7 @@ export default function Profile() {
 
   return (
     <>
-      <div className="min-h-screen bg-green-600 flex justify-center items-center">
+      <div className="min-h-screen bg-[#464866] flex justify-center items-center">
         {profileLoading ? (
           <LoadingComponent />
         ) : profileAppErr || profileServerErr ? (
