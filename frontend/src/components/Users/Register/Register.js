@@ -12,9 +12,9 @@ const formSchema = Yup.object({
   email: Yup.string().required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
-//-------------------------------
+
 //Register
-//-------------------------------
+
 const Register = () => {
   //dispath
   const dispatch = useDispatch();
@@ -30,7 +30,6 @@ const Register = () => {
     onSubmit: (values) => {
       //dispath the action
       dispatch(registerUserAction(values));
-      console.log(values);
     },
     validationSchema: formSchema,
   });
@@ -41,7 +40,7 @@ const Register = () => {
 
   //redirect
   if (registered) {
-    return <Navigate to="/profile" />;
+    return <Navigate to="/login" />;
   }
 
   return (

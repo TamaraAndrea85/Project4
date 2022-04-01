@@ -132,7 +132,7 @@ const userProfileCtrl = expressAsyncHandler(async (req, res) => {
 const updateUserCtrl = expressAsyncHandler(async (req, res) => {
   const { _id } = req?.user;
   //block
-  blockUser(req?.user);
+
   validateMongodbId(_id);
   const user = await User.findByIdAndUpdate(
     _id,

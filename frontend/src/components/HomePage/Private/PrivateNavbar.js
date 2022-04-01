@@ -1,7 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logoutAction } from "../../../redux/slices/users/usersSlices";
+import { useDispatch } from "react-redux";
 import {
   BellIcon,
   MenuIcon,
@@ -26,7 +28,9 @@ const PrivateNavbar = ({ isLogin }) => {
     { name: "Your Profile", href: `/profile` },
     { name: "Change your password", href: "/update-password" },
   ];
-
+  //logout
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -71,7 +75,7 @@ const PrivateNavbar = ({ isLogin }) => {
                 <div className="flex-shrink-0 ">
                   <Link
                     to="/create-post"
-                    className="pr-3  relative inline-flex items-center mr-2 px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="pr-3  relative inline-flex items-center mr-2 px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#2E9CCA] hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <PlusIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -81,8 +85,12 @@ const PrivateNavbar = ({ isLogin }) => {
                   </Link>
 
                   <button
+                    onClick={() => {
+                      navigate("/");
+                      dispatch(logoutAction());
+                    }}
                     type="button"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <LogoutIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -101,7 +109,7 @@ const PrivateNavbar = ({ isLogin }) => {
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"
-                              // src={isLogin?.profilePhoto}
+                              src={isLogin?.profilePhoto}
                               alt=""
                             />
                           </Menu.Button>
@@ -169,7 +177,7 @@ const PrivateNavbar = ({ isLogin }) => {
                 <div className="flex-shrink-0">
                   <img
                     className="h-10 w-10 rounded-full"
-                    // src={isLogin.profilePhoto}
+                    src={isLogin.profilePhoto}
                     alt=""
                   />
                 </div>

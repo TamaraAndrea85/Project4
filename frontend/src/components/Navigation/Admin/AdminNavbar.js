@@ -1,6 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from "react";
-import HomePage from "../../HomePage/HomePage";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +11,7 @@ import {
   XIcon,
   BookOpenIcon,
   LogoutIcon,
+  PencilAltIcon,
 } from "@heroicons/react/outline";
 import { PlusIcon } from "@heroicons/react/solid";
 import { logoutAction } from "../../../redux/slices/users/usersSlices";
@@ -20,7 +20,7 @@ const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Create", href: "/create-post", current: false },
   { name: "Posts", href: "/posts", current: false },
-  { name: "Authors", href: "/users", current: false },
+  { name: "Bloggers", href: "/users", current: false },
   { name: "Add Category", href: "/add-category", current: false },
   { name: "Category List", href: "/category-list", current: false },
 ];
@@ -44,7 +44,7 @@ const AdminNavbar = ({ isLogin }) => {
   // }
   let navigate = useNavigate();
   return (
-    <Disclosure as="nav" className="bg-green-800">
+    <Disclosure as="nav" className="bg-[#25274d]">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +63,7 @@ const AdminNavbar = ({ isLogin }) => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   {/* Logo */}
-                  <BookOpenIcon className="h-10 w-10 text-yellow-200" />
+                  <PencilAltIcon className="h-10 w-10 text-[#2E9CCA]" />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                   {navigation.map((item) => (
@@ -73,8 +73,8 @@ const AdminNavbar = ({ isLogin }) => {
                       className={classNames(
                         item.current
                           ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                        "px-3 py-2 rounded-md text-sm font-medium"
+                          : "text-[#AAABB8] hover:bg-[#464866] hover:text-white",
+                        "px-3 py-2 rounded-lg text-sm font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
@@ -89,7 +89,7 @@ const AdminNavbar = ({ isLogin }) => {
                   <Link
                     to="/create-post"
                     type="button"
-                    className="relative mr-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="relative mr-4 inline-flex items-center px-4 py-2 border border-transparent shadow-md text-sm font-medium rounded-md text-white bg-[#2E8CCA] hover:bg-[#29648A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <PlusIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -104,7 +104,7 @@ const AdminNavbar = ({ isLogin }) => {
                       dispatch(logoutAction());
                     }}
                     type="button"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#25284d] hover:bg-[#2E9CCA] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <LogoutIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -119,7 +119,7 @@ const AdminNavbar = ({ isLogin }) => {
                     {({ open }) => (
                       <>
                         <div>
-                          <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                          <Menu.Button className="bg-[#464866] flex text-sm rounded-full bg- focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span className="sr-only">Open user menu</span>
                             <img
                               className="h-8 w-8 rounded-full"

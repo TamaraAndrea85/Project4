@@ -5,6 +5,7 @@ import {
   XIcon,
   LoginIcon,
   BookOpenIcon,
+  PencilAltIcon,
 } from "@heroicons/react/outline";
 import { PlusIcon } from "@heroicons/react/solid";
 
@@ -22,7 +23,7 @@ function classNames(...classes) {
 
 const PublicNavbar = () => {
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-[#464866]">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,7 +42,7 @@ const PublicNavbar = () => {
                 </div>
                 <div className="flex-shrink-0 flex items-center">
                   {/* Logo */}
-                  <BookOpenIcon className="h-10 w-10 text-yellow-200" />
+                  <PencilAltIcon className="h-10 w-10 text-[#AAABB8]" />
                 </div>
                 <div className="hidden md:ml-6 md:flex md:items-center md:space-x-4">
                   {navigation.map((item) => (
@@ -50,8 +51,8 @@ const PublicNavbar = () => {
                       to={item.href}
                       className={classNames(
                         item.current
-                          ? "bg-gray-900 text-white"
-                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                          ? "bg-[#25274d] text-white"
+                          : "text-gray-300 hover:bg-[#25274d] hover:text-white",
                         "px-3 py-2 rounded-md text-sm font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}
@@ -66,7 +67,7 @@ const PublicNavbar = () => {
                   <Link
                     to="/login"
                     type="button"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#2E9CCA] hover:bg-[#29648A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <LoginIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -78,7 +79,7 @@ const PublicNavbar = () => {
                 <div className="hidden md:ml-4 md:flex-shrink-0 md:flex md:items-center">
                   <Link
                     to="/create-post"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-pink-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-[#25274d] hover:bg-[#464866] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
                     <PlusIcon
                       className="-ml-1 mr-2 h-5 w-5"
@@ -99,7 +100,7 @@ const PublicNavbar = () => {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
+                      ? "bg-[#25274d] text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
