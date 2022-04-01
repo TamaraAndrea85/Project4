@@ -21,7 +21,7 @@ const UsersListItem = (user) => {
 
   return (
     <>
-      <div className="p-8 mb-4 bg-white shadow rounded">
+      <div className="p-8 mb-4 bg-[#AAABB8] shadow rounded">
         <div className="flex flex-wrap items-center -mx-4">
           <div className="w-full lg:w-3/12 flex px-4 mb-6 lg:mb-0">
             <img
@@ -37,14 +37,14 @@ const UsersListItem = (user) => {
             </div>
           </div>
           <div className="w-1/2 lg:w-2/12 px-4 mb-6 lg:mb-0">
-            <p className="py-1 px-2 text-xs text-purple-500 bg-purple-50 rounded-full">
+            <p className="py-1 px-2 text-xs text-[#29648A] bg-[#3E9CCA] rounded-full">
               {user?.user?.accountType}
               <span>{user?.user?.isBlocked && "Blocked"}</span>
             </p>
           </div>
           <div className="w-1/2 lg:w-2/12 px-4 mb-6 lg:mb-0">
             <p className="text-sm font-medium">
-              <span className="text-base mr-2  text-bold text-yellow-500">
+              <span className="text-base mr-2  text-bold text-[#2E9CCA]">
                 {user.user?.followers?.length}
               </span>
               followers
@@ -52,13 +52,13 @@ const UsersListItem = (user) => {
           </div>
           <div className="w-full flex lg:w-4/12 px-4  mb-6 lg:mb-0">
             <p className="inline-block py-1 px-2 mr-2 mb-1 lg:mb-0 text-xs border-2 rounded">
-              <span className="text-base mr-2  boder-2 text-bold text-yellow-500">
+              <span className="text-base mr-2  boder-2 text-bold text-[#2E9CCA]">
                 {user.user?.posts?.length} - Posts
               </span>
             </p>
             <Link
               to={`/profile/${user?.user?._id}`}
-              className=" text-gray-600 inline-block py-1 px-2 text-center mr-2 mb-1 lg:mb-0 text-xs border-2 border-yellow-500 rounded hover:bg-green-600 hover:text-white"
+              className=" text-[#25274D] inline-block py-1 px-2 text-center mr-2 mb-1 lg:mb-0 text-xs border-2 border-[#464866] rounded hover:bg-[#2E9CCA] hover:text-white"
             >
               Profile
             </Link>

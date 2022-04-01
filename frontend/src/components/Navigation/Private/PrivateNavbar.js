@@ -60,7 +60,7 @@ const PrivateNavbar = ({ isLogin }) => {
                       to={item.href}
                       className={classNames(
                         item.current
-                          ? "bg-gray-500 text-white"
+                          ? "bg-[#464866] text-white"
                           : "text-gray-300 hover:bg-gray-700 hover:text-white",
                         "px-3 py-2 rounded-md text-sm font-medium"
                       )}
@@ -158,7 +158,7 @@ const PrivateNavbar = ({ isLogin }) => {
                   href={item.href}
                   className={classNames(
                     item.current
-                      ? "bg-gray-900 text-white"
+                      ? "bg-[#25274D] text-white"
                       : "text-gray-300 hover:bg-gray-700 hover:text-white",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}

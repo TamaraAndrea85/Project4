@@ -62,16 +62,15 @@ export default function CreatePost() {
   if (isCreated) return <Navigate to="/posts" />;
   return (
     <>
-      <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-[#25274d] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-300">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-[#AAABB8]">
             Create Post
           </h2>
 
-          <p className="mt-2 text-center text-sm text-gray-600">
-            <p className="font-medium text-green-600 hover:text-indigo-500">
-              Share your ideas to the word. Your post must be free from
-              profanity
+          <p className="mt-2 text-center text-sm text-grey-300">
+            <p className="font-medium text-[#29648A] hover:text-[#2E9CCA]">
+              Share your thoughts and ideas with the word!
             </p>
           </p>
 
@@ -82,7 +81,7 @@ export default function CreatePost() {
           ) : null}
         </div>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-white py-8 px-4 shadow lg:rounded-lg sm:px-10">
             <form onSubmit={formik.handleSubmit} className="space-y-6">
               <div>
                 <label
@@ -145,7 +144,7 @@ export default function CreatePost() {
                   htmlFor="password"
                   className="block text-sm font-medium mt-3 mb-2 text-gray-700"
                 >
-                  Select image to upload
+                  Select an image to upload
                 </label>
                 <Container className="container bg-gray-700">
                   <Dropzone
@@ -189,7 +188,7 @@ export default function CreatePost() {
                 ) : (
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#29648A] hover:bg-[#AAABB8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Create
                   </button>

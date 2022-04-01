@@ -26,38 +26,38 @@ const CategoryList = () => {
           {serverErr} {serverErr}
         </h2>
       ) : categoryList?.length <= 0 ? (
-        <h2 className="text-center text-3xl text-green-800">
+        <h2 className="text-center text-3xl text-[#2E9CCA]">
           No category Found
         </h2>
       ) : (
-        <div className="flex flex-col">
-          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
+        <div className="flex flex-col  bg-[#25274D]">
+          <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 bg-[#25274D]">
+            <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 ">
+              <div className="shadow overflow-hidden border-b border-[#25274D] sm:rounded-lg">
+                <table className="min-w-full divide-y divide-[#25274D]">
+                  <thead className="bg-[#29648A]">
                     <tr>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-[#25274D] uppercase tracking-wider"
                       >
                         Author
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-[#25274D uppercase tracking-wider"
                       >
                         Title
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-[#25274D uppercase tracking-wider"
                       >
                         Created At
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        className="px-6 py-3 text-left text-xs font-medium text-[#25274D] uppercase tracking-wider"
                       >
                         Edit
                       </th>
@@ -65,7 +65,7 @@ const CategoryList = () => {
                   </thead>
                   <tbody>
                     {categoryList?.map((category) => (
-                      <tr className="bg-gray-50">
+                      <tr className="bg-[#AAABB8]">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
@@ -76,25 +76,25 @@ const CategoryList = () => {
                               />
                             </div>
                             <div className="ml-4">
-                              <div className="text-sm font-medium text-gray-900">
+                              <div className="text-sm font-medium text-[#25274D]">
                                 {category?.user?.firstName}{" "}
                                 {category?.user?.lastName}
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-[#25274D]">
                                 {category?.user?.email}
                               </div>
                             </div>
                           </div>
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-[#25274D]">
                           {category.title}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-[#25274D]">
                           {<DateFormatter date={category?.createdAt} />}
                         </td>
                         <Link to={`/update-category/${category?._id}`}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <PencilAltIcon className="h-5 text-indigo-500" />
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-[#25274D]">
+                            <PencilAltIcon className="h-5 text-[#2E9CCA]" />
                           </td>
                         </Link>
                       </tr>

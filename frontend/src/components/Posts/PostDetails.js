@@ -108,7 +108,6 @@ const PostDetails = () => {
           {/* Add comment Form component here */}
           {userAuth ? <AddComment postId={id} /> : null}
           <div className="flex justify-center  items-center">
-            {/* <CommentsList comments={post?.comments} postId={post?._id} /> */}
             <CommentsList comments={postDetails?.comments} />
           </div>
         </section>
