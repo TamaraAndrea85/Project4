@@ -1,3 +1,3 @@
-const baseUrl = "http://localhost:4000";
+const baseUrl = "https://banana-sundae-73048.herokuapp.com/";
 
 export default baseUrl;

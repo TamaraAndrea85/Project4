@@ -32,7 +32,7 @@ const PostDetails = () => {
   const { userAuth } = user;
 
   const isCreatedBy = postDetails?.user?._id === userAuth?._id;
-  console.log(isCreatedBy);
+
   //redirect
   if (isDeleted) return <Navigate to="/posts" />;
   return (
